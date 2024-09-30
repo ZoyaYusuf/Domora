@@ -1,0 +1,85 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-3">
+    <div class="col-8 offset-3">
+        <h3><b><%= listing.title %></b> </h3>
+    </div>
+    <div class="card col-6 offset-3 show-card listing-card">
+        <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing-image"/>
+        <div class="card-body">
+            <p class="card-text mt-3">Owned By : <i><%= listing.owner.username %> </i></p>
+            <p class="card-text"> <%= listing.description %>  </p>
+            <p class="card-text"> &#8377; <%= listing.price.toLocaleString("en-IN") %> </p>
+            <p class="card-text"> <%= listing.location %> </p>
+            <p class="card-text"> <%= listing.country %> </p>
+        </div>
+</div>
+<!-- <div>
+    <iframe style="margin-left: 350px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3577.4042874861298!2d73.04472407541786!3d26.280990777029338!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39418cfa2d57b3f7%3A0xccd024507880be71!2sUmaid%20Bhawan%20Palace!5e0!3m2!1sen!2sin!4v1727710490760!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+</div> -->
+
+    <br>
+    <% if(currUser && listing.owner._id.equals(currUser._id)) {%>
+    <div class="btns">
+        <a href="/listings/<%=listing._id %>/edit" class="btn btn-dark col-1 offset-3 add-btn">EDIT</a>
+        <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
+            <button class="btn btn-dark offset-5">DELETE</button>
+        </form>
+    </div>
+    <% } %>
+
+<!-- reviews   -->
+    <div class="listing-card col-6 offset-3 mb-3">
+        <% if(currUser) {%> <hr>
+        <h4>Leave a Review</h4>
+        <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
+            <div class="mb-3 mt-3">
+                <label for="rating"  class="form-label" >Rating</label>
+                <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
+            </div>
+            <!-- <fieldset class="starability-Slot">
+                <legend>First rating:</legend>
+                <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+                <input type="radio" id="first-rate1" name="rating" value="1" />
+                <label for="first-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="first-rate2" name="rating" value="2" />
+                <label for="first-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="first-rate3" name="rating" value="3" />
+                <label for="first-rate3" title="Average">3 stars</label>
+                <input type="radio" id="first-rate4" name="rating" value="4" />
+                <label for="first-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="first-rate5" name="rating" value="5" />
+                <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>     -->
+
+            <div class="mb-3 mt-3">
+                <label for="comment"  class="form-label" >Comments</label>
+                <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+                <div class="invalid-feedback">Please add a comment for review</div>
+            </div>
+            <button  class="btn btn-outline-dark" >SUMBIT</button>
+        </form>
+        <hr>
+
+    <% } %>
+
+    <% if(listing.review.length>0) {%>
+        <p><b>All Reviews</b></p>
+        <div class="row">  
+        <% for(review of listing.review) { %>
+            <div class="card col-5 ms-3 mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">@<%= review.author.username %></h5>
+                    <p class="card-text"><%= review.comment %></p>
+                    <p class="card-text"><%= review.rating %> Stars</p>
+                    <!-- <p class="starability-result" data-rating="3">Rated: 3 stars</p> -->
+                </div>
+            <form action="/listings/<%= listing._id %>/reviews/<%=review._id%>?_method=DELETE" class="mb-3" method="post">
+                <button class="btn btn-sm btn-dark">DELETE</button>
+            </form>    
+            </div>
+        <% } %>
+    </div>  
+    <% } %>
+</div>
