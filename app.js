@@ -6,7 +6,7 @@ if(process.env.NODE_ENV != "production"){ //fdon't upload at production level
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-// const Mongo_url="mongodb://127.0.0.1:27017/wanderlust"; //will be created when a colection is added in it
+// const Mongo_url="mongodb://127.0.0.1:27017/wanderlust"; //will be created when a collection is added in it
 const dbUrl = process.env.ATLASDB_URL;
 
 const path = require("path")

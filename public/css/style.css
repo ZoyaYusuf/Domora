@@ -66,7 +66,13 @@ body{
 .card-img-top{
     border-radius: 1rem !important;
     width: 100% !important;
+    height: 400px !important;
     object-fit: cover !important;
+    transition: all 0.3s ease-in-out !important;
+}
+
+.card-img-top:hover{ 
+    box-shadow: 0 4px 10px #fe424d !important;
 }
 
 .card-body{
