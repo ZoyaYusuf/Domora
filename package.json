@@ -8,7 +8,7 @@
   "scripts": {
   "start": "node app.js",
   "dev": "nodemon app.js",
-  "build": "echo 'no build step'"
+  "build": "echo 'no build step'" 
   },
   "keywords": [],
   "author": "",
